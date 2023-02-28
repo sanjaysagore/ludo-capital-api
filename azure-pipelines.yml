@@ -22,6 +22,6 @@ steps:
     deployToSlotOrASE: true
     ResourceGroupName: 'ludo_capital'
     SlotName: 'production'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/ludo-capital-api'
 
 - task: PublishBuildArtifacts@1
