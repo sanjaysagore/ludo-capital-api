@@ -1,25 +1,27 @@
+jobs:
+- deployment: DeploymentJob
 pool:
-  vmImage: ubuntu-latest
+  vmImage: $(vmImageName)
+environment: $(environmentName)
+strategy:
+  runOnce:
+    deploy:
+      steps:
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '$(pythonVersion)'
+        displayName: 'Use Python version'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+      - task: AzureWebApp@1
+        displayName: 'Deploy Azure Web App : {{ webAppName }}'
+        inputs:
+          azureSubscription: $(azureServiceConnectionId)
+          appName: $(webAppName)
+          package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+          deploymentMethod: zipDeploy
 
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Azure subscription 1(b7628aa8-705c-40f0-bbee-a9bde27419ec)'
-    appType: 'webAppLinux'
-    WebAppName: 'ludo-capital-api'
-    deployToSlotOrASE: true
-    ResourceGroupName: 'ludo_capital'
-    SlotName: 'production'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/(System.DefaultWorkingDirectory)/**/*.zip'
-    RuntimeStack: 'PYTHON|3.10'
+          # The following parameter is specific to the Flask example code. You may
+          # or may not need a startup command for your app.
 
-- task: PublishBuildArtifacts@1
+          startUpCommand: 'gunicorn --bind=0.0.0.0 --workers=4 startup:app'
