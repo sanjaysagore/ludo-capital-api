@@ -1,4 +1,12 @@
 trigger:
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1(b7628aa8-705c-40f0-bbee-a9bde27419ec)'
+    appType: 'webAppLinux'
+    WebAppName: 'ludo-capital-api'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    RuntimeStack: 'PYTHON|3.10'
 - main
 
 pool:
