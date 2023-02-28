@@ -21,6 +21,5 @@ steps:
     SlotName: 'production'
     packageForLinux: '$(System.DefaultWorkingDirectory)/(System.DefaultWorkingDirectory)/**/*.zip'
     RuntimeStack: 'PYTHON|3.10'
-- main
 
 - task: PublishBuildArtifacts@1
