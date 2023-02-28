@@ -1,4 +1,3 @@
-trigger:
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
@@ -6,30 +5,3 @@ trigger:
     appType: 'webAppLinux'
     WebAppName: 'ludo-capital-api'
     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
-    RuntimeStack: 'PYTHON|3.10'
-- main
-
-pool:
-  vmImage: ubuntu-latest
-
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
-
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Azure subscription 1(b7628aa8-705c-40f0-bbee-a9bde27419ec)'
-    appType: 'webAppLinux'
-    WebAppName: 'ludo-capital-api'
-    deployToSlotOrASE: true
-    ResourceGroupName: 'ludo_capital'
-    SlotName: 'production'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/InnovationInABox-CI/drop/s/build/*.zip'
-
-- task: PublishBuildArtifacts@1
