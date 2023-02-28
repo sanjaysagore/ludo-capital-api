@@ -22,6 +22,6 @@ steps:
     deployToSlotOrASE: true
     ResourceGroupName: 'ludo_capital'
     SlotName: 'production'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/InnovationInABox-CI/drop/s/build'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/InnovationInABox-CI/drop/s/build/*.zip'
 
 - task: PublishBuildArtifacts@1
